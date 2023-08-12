@@ -11,16 +11,16 @@ function mpp_get_user_id_by_display_name( $display_name ) {
   return $user->ID;
 }
 
-function mpp_generate_post_from_pdf_upload($file) {
-
-  $filetype = mime_content_type($file);
+function mpp_generate_post_from_media_pdfs($attachment_ID) {
+  $filetype = get_post_mime_type($attachment_ID);
+  $filename = basename( get_attached_file( $attachment_ID ) );
   if ($filetype == 'application/pdf') {
-    $title = ucwords(str_replace('.pdf', '', $file['name']));
-    $user_id = mpp_get_user_id_by_display_name('InContext SEO');
+    $title = ucwords( str_replace( '_', ' ', str_replace( '.pdf', '', $filename ) ) );
+    $user_id = mpp_get_user_id_by_display_name('InContext SEO'); 
     $current_year = date('Y');
     $current_month = date('m');
-    $media_library_base_url = 'http://actioncoachwi.com/wps/wp-content/uploads/';
-    $file_url = $media_library_base_url . $current_year . '/' . $current_month . '/' . $file['name'];
+    $media_library_base_url = get_site_url() . '/wp-content/uploads/';
+    $file_url = $media_library_base_url . $current_year . '/' . $current_month . '/' . $filename;
     $content = '<a class="mpp-button" href="'. $file_url . '" target="_blank">' . $title . '</a>';
 
     $new_pdf_post = array(
@@ -31,6 +31,5 @@ function mpp_generate_post_from_pdf_upload($file) {
     );
     wp_insert_post($new_pdf_post);
   }
-  return $file;
 }
-add_filter('wp_handle_upload_prefilter', 'mpp_generate_post_from_pdf_upload');
+add_action('add_attachment', 'mpp_generate_post_from_media_pdfs');
