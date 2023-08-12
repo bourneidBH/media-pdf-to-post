@@ -21,7 +21,7 @@ function mpp_generate_post_from_media_pdfs($attachment_ID) {
     $current_month = date('m');
     $media_library_base_url = get_site_url() . '/wp-content/uploads/';
     $file_url = $media_library_base_url . $current_year . '/' . $current_month . '/' . $filename;
-    $content = '<a class="mpp-button" href="'. $file_url . '" target="_blank">' . $title . '</a>';
+    $content = '<a class="mpp-button" href="'. $file_url . '" target="_blank">Download Article ' . $title . ' PDF</a>';
 
     $new_pdf_post = array(
       'post_title' => $title,
