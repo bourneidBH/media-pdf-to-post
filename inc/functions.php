@@ -15,7 +15,7 @@ function mpp_generate_post_from_media_pdfs($attachment_ID) {
   $filetype = get_post_mime_type($attachment_ID);
   $filename = basename( get_attached_file( $attachment_ID ) );
   if ($filetype == 'application/pdf') {
-    $title = ucwords( str_replace( '_', ' ', str_replace( '.pdf', '', $filename ) ) );
+    $title = ucwords(str_replace ( '-', ' ', str_replace( '_', ' ', str_replace( '.pdf', '', $filename ) ) ) );
     $user_id = mpp_get_user_id_by_display_name('InContext SEO'); 
     $current_year = date('Y');
     $current_month = date('m');
